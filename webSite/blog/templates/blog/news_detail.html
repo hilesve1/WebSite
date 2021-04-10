@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="alert alert-light">
+    <h3>{{ object.title }}</h3>
+    <p>{{ object.text|safe }}</p>
+    <div class="row">
+      <div>
+        <img src="{{ object.avtor.profile.img.url }}" alt="{{ object.avtor }}" class="user_images" >
+      </div>
+      <div class="mt-2">
+        <span class="text-muted">Публикация: {{ object.date|date:"d E Y, в H:i" }}</span>
+        {% if object.avtor %}
+          <p><b>Автор:</b><a href="{% url 'user-news' object.avtor %}">{{ object.avtor }}</a></p>
+        {% else %}
+            <p><b>Автор:</b><mark>Неизвестный автор</mark></p>
+        {% endif %}
+      </div>
+    </div>
+    {% if object.avtor == user %}
+    <hr>
+    <a href="{% url 'news-update' object.id %}" class="btn btn-info">Обновить статью</a>
+    <a href="{% url 'news-delete' object.id %}" class="btn btn-danger">Удалить статью</a>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block aside_block %}
+<img src="https://sun9-74.userapi.com/impg/VX0nbtdO8bzWScm8sKvSXqprNypamdPkbHLXLQ/X3DOeXuSuGI.jpg?size=734x733&quality=96&sign=8648e9e8afbe583936f04bd76f68ef21&type=album" class="img-thumbnail" alt="img-interesting">
+<p>Покупай одежду по выгодным ценам</p>
+<a href="https://www.instagram.com/intro.clothes.izh/?hl=ru" target="_blank">
+  <button class="btn btn-warning" type="button" name="button">Посмотреть</button>
+</a>
+{% endblock %}

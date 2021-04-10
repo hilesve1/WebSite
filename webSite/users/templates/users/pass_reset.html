@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Восстановление пароля
+{% endblock %}
+
+{% block content %}
+  <h1>Восстановление пароля</h1>
+  <form method="post" class="form-register auth">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-outline-danger" type="submit">Запросить новый пароль</button>
+  </form>
+{% endblock %}
+
+
+{% block aside_block %}
+<img src="https://sun9-74.userapi.com/impg/VX0nbtdO8bzWScm8sKvSXqprNypamdPkbHLXLQ/X3DOeXuSuGI.jpg?size=734x733&quality=96&sign=8648e9e8afbe583936f04bd76f68ef21&type=album" class="img-thumbnail" alt="img-interesting">
+<p>Покупай одежду по выгодным ценам</p>
+<a href="https://www.instagram.com/intro.clothes.izh/?hl=ru" target="_blank">
+  <button class="btn btn-warning" type="button" name="button">Посмотреть</button>
+</a>
+{% endblock %}

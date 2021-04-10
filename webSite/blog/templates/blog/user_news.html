@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<h2>Все статьи от автора {{ view.kwargs.username }}</h2>
+<h4>Количество:{{page_obj.paginator.count}}</h4>
+{% for post in news %}
+  <div class="alert alert-light">
+    <h3>{{ post.title }}</h3>
+    <p class = "limit">{{ post.text }}</p>
+    <div class="row">
+      <div>
+        <img src="{{ post.avtor.profile.img.url }}" alt="{{ post.avtor }}" class="user_images" >
+      </div>
+      <div class="mt-2">
+        <span class="text-muted">Публикация: {{ post.date|date:"d E Y, в H:i" }}</span>
+        {% if post.avtor %}
+          <p><b>Автор:</b><a href="{% url 'user-news' post.avtor %}">{{ post.avtor }}</a></p>
+        {% else %}
+            <p><b>Автор:</b><mark>Неизвестный автор</mark></p>
+        {% endif %}
+      </div>
+    </div>
+    <a href="{% url 'news-detail' post.id %}" class = "btn btn-warning mt-2">Читать далее</a>
+  </div>
+{% endfor %}
+{% if is_paginated %}
+  {% if page_obj.has_previous %}
+    <a href="/" class="btn btn-outline-danger">Начало</a>
+    <a href="?page={{ page_obj.previous_number}}" class="btn btn-outline-danger">Предыдущая</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+    {% if num == page_obj.number %}
+      <button class="btn btn-danger">{{num}}</button>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'  %}
+        <a href="?page={{num}}" class="btn btn-outline-danger">{{num}}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number}}" class="btn btn-outline-danger">Следующая</a>
+      <a href="?page={{ page_obj.paginator.num_pages}}" class="btn btn-outline-danger">Последняя</a>
+  {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block aside_block %}
+  <img src="https://sun9-74.userapi.com/impg/VX0nbtdO8bzWScm8sKvSXqprNypamdPkbHLXLQ/X3DOeXuSuGI.jpg?size=734x733&quality=96&sign=8648e9e8afbe583936f04bd76f68ef21&type=album" class="img-thumbnail" alt="img-interesting">
+  <p>Покупай одежду по выгодным ценам</p>
+  <a href="https://www.instagram.com/intro.clothes.izh/?hl=ru" target="_blank">
+    <button class="btn btn-warning" type="button" name="button">Посмотреть</button>
+  </a>
+
+{% endblock %}
